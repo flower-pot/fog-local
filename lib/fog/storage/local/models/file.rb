@@ -101,7 +101,7 @@ module Fog
           file = ::File.new(path, 'wb')
           if body.is_a?(String)
             file.write(body)
-          elsif body.kind_of? ::File and ::File.exist?(body.path)
+          elsif (body.is_a?(::File) || body.is_a?(Tempfile)) && ::File.exist?(body.path)
             FileUtils.cp(body.path, path)
           else
             file.write(body.read)
